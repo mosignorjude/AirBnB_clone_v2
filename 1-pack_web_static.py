@@ -10,6 +10,7 @@ from fabric.api import local, runs_once
 
 @runs_once
 def do_pack():
+    """ archives the static files. """
     # get current timestamp
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
 
