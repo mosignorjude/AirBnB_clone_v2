@@ -60,6 +60,8 @@ def do_deploy(archive_path):
         run("sudo mkdir -p {}".format(folder_path))
         run(f'sudo tar -xzvf /tmp/{file_name} {folder_path}')
         run(f'sudo rm -rf /tmp/{file_name}')
+        run("sudo mv {}web_static/* {}".format(folder_path, folder_path))
+        run("sudo rm -rf {}web_static".format(folder_path))
         run("sudo rm -rf /data/web_static/current")
         run(f"sudo ln -s {folder_path} /data/web_static/current")
         print('New version deployed!')
