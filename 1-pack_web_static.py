@@ -2,15 +2,18 @@
 """
 Fabric script that generates a .tgz archive
 """
-# imports necessary modules
-import os
+from fabric.api import local, runs_once, task
 from datetime import datetime
-from fabric.api import local, runs_once
+import os
+print("Loading 1-pack_web_static.py 1")
+# imports necessary modules
 
 
+@task
 @runs_once
 def do_pack():
     """ archives the static files. """
+    print("Loading 1-pack_web_static.py 2")
     # get current timestamp
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
 
@@ -22,6 +25,7 @@ def do_pack():
     command = f'tar -czvf {file_dir} web_static'
     output = ''
     try:
+        print("Loading 1-pack_web_static.py 3")
         print("Packing web_static to {}".format(file_dir))
         local(command)
         output = file_dir
