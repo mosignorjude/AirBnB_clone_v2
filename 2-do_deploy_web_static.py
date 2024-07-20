@@ -18,16 +18,15 @@ env.hosts = ['18.210.14.237', '54.237.112.158']
 @runs_once
 def do_pack():
     """ archives the static files. """
-    print("Loading 1-pack_web_static.py 2")
     # get current timestamp
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
 
-    filename = f"web_static_{timestamp}.tgz"
+    filename = "web_static_{}.tgz".format(timestamp)
     if not os.path.isdir("versions"):
         os.mkdir("versions")
 
-    file_dir = f"versions/{filename}"
-    command = f'tar -czvf {file_dir} web_static'
+    file_dir = "versions/{}".format(filename)
+    command = 'tar -czvf {} web_static'.format(file_dir)
     output = ''
     try:
         print("Loading 1-pack_web_static.py 3")
@@ -53,17 +52,17 @@ def do_deploy(archive_path):
         return False
     file_name = os.path.basename(archive_path)
     folder_name = file_name.replace(".tgz", "")
-    folder_path = f"/data/web_static/releases/{folder_name}/"
-    success = False
+    folder_path = "/data/web_static/releases/{}/".format(folder_name)
+    success = ''
     try:
-        put(archive_path, f"/tmp/{file_name}")
+        put(archive_path, "/tmp/{}".format(file_name))
         run("sudo mkdir -p {}".format(folder_path))
-        run(f'sudo tar -xzvf /tmp/{file_name} -C {folder_path}')
-        run(f'sudo rm -rf /tmp/{file_name}')
+        run('sudo tar -xzvf /tmp/{} -C {}'.format(file_name, folder_path))
+        run('sudo rm -rf /tmp/{}'.format(file_name))
         run("sudo mv {}web_static/* {}".format(folder_path, folder_path))
         run("sudo rm -rf {}web_static".format(folder_path))
         run("sudo rm -rf /data/web_static/current")
-        run(f"sudo ln -s {folder_path} /data/web_static/current")
+        run("sudo ln -s {} /data/web_static/current".format(folder_path))
         print('New version deployed!')
         success = True
     except Exception:
