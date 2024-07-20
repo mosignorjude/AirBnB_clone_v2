@@ -6,7 +6,7 @@ Fabric script
 
 """
 # imports necessary modules
-from fabric.api import local, runs_once, task, env, put, run
+from fabric.api import local, env, put, run
 from datetime import datetime
 import os
 
@@ -14,10 +14,14 @@ import os
 env.hosts = ['18.210.14.237', '54.237.112.158']
 
 
-@task
-@runs_once
-def do_pack():
-    """ archives the static files. """
+def do_deploy(archive_path):
+    """Distributes an archive to a web server.
+    Args:
+        archive_path (str): The path of the archive to distribute.
+    Returns:
+        If the file doesn't exist at archive_path or an error occurs - False.
+        Otherwise - True.
+    """
     # get current timestamp
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
 
@@ -44,9 +48,6 @@ def do_deploy(archive_path):
     """Distributes an archive to a web server.
     Args:
         archive_path (str): The path of the archive to distribute.
-    Returns:
-        If the file doesn't exist at archive_path or an error occurs - False.
-        Otherwise - True.
     """
     if not os.path.exists(archive_path):
         return False
