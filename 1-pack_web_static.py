@@ -17,12 +17,12 @@ def do_pack():
     # get current timestamp
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
 
-    filename = f"web_static_{timestamp}.tgz"
+    filename = "web_static_{}.tgz".format(timestamp)
     if not os.path.isdir("versions"):
         os.mkdir("versions")
 
-    file_dir = f"versions/{filename}"
-    command = f'tar -czvf {file_dir} web_static'
+    file_dir = "versions/{}".format(filename)
+    command = 'tar -czvf {} web_static'.format(file_dir)
     output = ''
     try:
         print("Loading 1-pack_web_static.py 3")
