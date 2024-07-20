@@ -10,7 +10,7 @@ from fabric.api import local, runs_once, task, env, put, run
 from datetime import datetime
 import os
 
-env.user = "ubuntu"
+# env.user = "ubuntu"
 env.hosts = ['18.210.14.237', '54.237.112.158']
 
 
@@ -58,7 +58,7 @@ def do_deploy(archive_path):
     try:
         put(archive_path, f"/tmp/{file_name}")
         run("sudo mkdir -p {}".format(folder_path))
-        run(f'sudo tar -xzvf /tmp/{file_name} {folder_path}')
+        run(f'sudo tar -xzvf /tmp/{file_name} -C {folder_path}')
         run(f'sudo rm -rf /tmp/{file_name}')
         run("sudo mv {}web_static/* {}".format(folder_path, folder_path))
         run("sudo rm -rf {}web_static".format(folder_path))
