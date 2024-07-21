@@ -15,7 +15,6 @@ env.hosts = ["18.210.14.237", "54.237.112.158"]
 
 def do_pack():
     """ archives the static files. """
-    print("Loading 1-pack_web_static.py 2")
     # get current timestamp
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
 
