@@ -20,22 +20,14 @@ def do_pack():
     timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
 
     filename = "web_static_{}.tgz".format(timestamp)
-    if not os.path.isdir("versions"):
-        os.mkdir("versions")
-
     file_dir = "versions/{}".format(filename)
-    command = 'tar -czvf {} web_static'.format(file_dir)
-    output = ''
-    try:
-        print("Loading 1-pack_web_static.py 3")
-        print("Packing web_static to {}".format(file_dir))
-        local(command)
-        output = file_dir
-        size = os.stat(output).st_size
-        print("web_static packed: {} -> {} Bytes".format(output, size))
-    except Exception:
-        output = None
-    return output
+
+    if os.path.isdir("versions") is False:
+        if local("mkdir -p versions").failed is True:
+            return None
+    if local("tar -cvzf {} web_static".format(file_dir)).failed is True:
+        return None
+    return file_dir
 
 
 def do_deploy(archive_path):
